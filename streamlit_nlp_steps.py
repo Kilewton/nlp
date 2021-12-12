@@ -1,7 +1,27 @@
-## NLP App Theatre Reviews
+# NLP App Theatre Reviews
 
-### Import packages
+# Import packages
 
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+import nltk
+import seaborn as sns
+import text2emotion as te
+import time
+import base64
+from htbuilder.funcs import rgba, rgb
+from htbuilder.units import percent, px
+from htbuilder import HtmlElement, div, ul, li, br, hr, a, p, img, styles, classes, fonts
+from sumy.summarizers.lex_rank import LexRankSummarizer
+from sumy.nlp.tokenizers import Tokenizer
+from sumy.parsers.plaintext import PlaintextParser
+import streamlit.components.v1 as components
+from gensim.summarization import summarize
+from textblob import TextBlob
+from spacy_streamlit import visualize_tokens
+import spacy_streamlit
+import sumy
+from annotated_text import annotated_text
+from spacy import displacy
 import os
 import streamlit as st
 import pandas as pd
@@ -16,52 +36,28 @@ from pathlib import Path
 # Perform standard imports
 import spacy
 nlp = spacy.load('en_core_web_sm')
-from spacy import displacy
-from annotated_text import annotated_text
-import sumy
-import spacy_streamlit
-from spacy_streamlit import visualize_tokens
-from textblob import TextBlob
-from gensim.summarization import summarize
-import streamlit.components.v1 as components
 
 # Sumy Summary Pkg
-from sumy.parsers.plaintext import PlaintextParser
-from sumy.nlp.tokenizers import Tokenizer
-from sumy.summarizers.lex_rank import LexRankSummarizer
-
-from htbuilder import HtmlElement, div, ul, li, br, hr, a, p, img, styles, classes, fonts
-from htbuilder.units import percent, px
-from htbuilder.funcs import rgba, rgb
-
-from pathlib import Path
-import base64
-import time
-
-import text2emotion as te
-
-import seaborn as sns
-import nltk
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 
 st.set_page_config(
     page_title="Drama Critiques Playground", layout="wide", page_icon="./images/flask.png"
 )
 
+
 def sumy_summarizer(docx):
-	parser = PlaintextParser.from_string(docx,Tokenizer("english"))
-	lex_summarizer = LexRankSummarizer()
-	summary = lex_summarizer(parser.document,3)
-	summary_list = [str(sentence) for sentence in summary]
-	result = ' '.join(summary_list)
-	return result
+    parser = PlaintextParser.from_string(docx, Tokenizer("english"))
+    lex_summarizer = LexRankSummarizer()
+    summary = lex_summarizer(parser.document, 3)
+    summary_list = [str(sentence) for sentence in summary]
+    result = ' '.join(summary_list)
+    return result
+
 
 def img_to_bytes(img_path):
     img_bytes = Path(img_path).read_bytes()
     encoded = base64.b64encode(img_bytes).decode()
     return encoded
-
 
 
 def main():
@@ -78,8 +74,8 @@ def main():
             unsafe_allow_html=True,
         )
 
-
     # Hide the Streamlit header and footer
+
     def hide_header_footer():
         hide_streamlit_style = """
                     <style>
@@ -95,14 +91,6 @@ def main():
     hide_header_footer()
 
     images = Image.open('images/binary.png')
-    st.image(images, width=400)
-
-    st.markdown("# Behind the Machine 🔍 🖥")
-    st.subheader(
-        """
-        This is a place where you can get familiar with nlp models  directly from your browser 🧪
-        """
-    )
     st.markdown("     ")
 
     st.markdown("---")
@@ -116,14 +104,12 @@ def main():
         print(f"Your copied review:{master_review}")
 
     st.sidebar.markdown("OR")
+
     def file_select(folder='./datasets'):
         filelist = os.listdir(folder)
         st.sidebar.markdown("OR")
         selectedfile = st.sidebar.selectbox('', filelist)
         return os.path.join(folder, selectedfile)
-
-
-
 
     if st.sidebar.button('Upload Data'):
         data = st.sidebar.file_uploader('', type=['CSV'])
@@ -137,7 +123,8 @@ def main():
             df = pd.read_csv(filename)
     st.sidebar.markdown("---")
     st.sidebar.header("Select Process Step")
-    nlp_steps = st.sidebar.selectbox('', ['00 - Show  Dataset','01 - Show  Review','02 - Basic Information','03 - Tokenization','04 - Lemmatization','05 - Name Entity Recognition','06 - Part of Speech',"07 - Sentiment Analysis","08 - Text Summarization","09 - Zoning","10 - Mapping"])
+    nlp_steps = st.sidebar.selectbox('', ['00 - Show  Dataset', '01 - Show  Review', '02 - Basic Information', '03 - Tokenization', '04 - Lemmatization',
+                                     '05 - Name Entity Recognition', '06 - Part of Speech', "07 - Sentiment Analysis", "08 - Text Summarization", "09 - Zoning", "10 - Mapping"])
     index_review = st.sidebar.number_input("Pick an Index of Review", 0, 100)
     st.sidebar.markdown("---")
     st.sidebar.markdown(
@@ -151,7 +138,8 @@ def main():
     if nlp_steps == "00 - Show  Dataset":
         if master_review == "Enter Text":
             num = st.number_input('No. of Rows', 5, 10)
-            head = st.radio('View from top (head) or bottom (tail)', ('Head', 'Tail'))
+            head = st.radio(
+                'View from top (head) or bottom (tail)', ('Head', 'Tail'))
 
             if head == 'Head':
                 st.dataframe(df.head(num))
@@ -176,9 +164,9 @@ def main():
         """
         code_header_placeholder = st.empty()
         snippet_placeholder = st.empty()
-        code_header_placeholder.header(f"**Code for the step: 00 - Show  Dataset**")
+        code_header_placeholder.header(
+            f"**Code for the step: 00 - Show  Dataset**")
         snippet_placeholder.code(snippet)
-
 
     elif nlp_steps == '01 - Show  Review':
         if master_review == "Enter Text":
@@ -201,19 +189,22 @@ def main():
         """
         code_header_placeholder = st.empty()
         snippet_placeholder = st.empty()
-        code_header_placeholder.header(f"**Code for the step: 01 - Show  Review**")
+        code_header_placeholder.header(
+            f"**Code for the step: 01 - Show  Review**")
         snippet_placeholder.code(snippet)
 
     elif nlp_steps == '02 - Basic Information':
         if master_review == "Enter Text":
-            st.markdown("Number of rows and columns helps us to determine how large the dataset is.")
+            st.markdown(
+                "Number of rows and columns helps us to determine how large the dataset is.")
             st.text('* Review number of words')
             st.write(len(df["Review"][index_review].split(" ")))
             st.text('* Review number of characters')
             st.write(len(df["Review"][index_review]))
             st.markdown("---")
         else:
-            st.markdown("Number of rows and columns helps us to determine how large the dataset is.")
+            st.markdown(
+                "Number of rows and columns helps us to determine how large the dataset is.")
             st.text('* Review number of words')
             st.write(len(master_review.split(" ")))
             st.text('* Review number of characters')
@@ -237,20 +228,23 @@ def main():
         """
         code_header_placeholder = st.empty()
         snippet_placeholder = st.empty()
-        code_header_placeholder.header(f"**Code for the step: 02 - Basic Information**")
+        code_header_placeholder.header(
+            f"**Code for the step: 02 - Basic Information**")
         snippet_placeholder.code(snippet)
 
     elif nlp_steps == '03 - Tokenization':
         if master_review == "Enter Text":
-            st.markdown("This is a view of the text split in tokens for the computer to better understand: ")
+            st.markdown(
+                "This is a view of the text split in tokens for the computer to better understand: ")
             doc = nlp(df["Review"][index_review])
-            text = df["Review"][index_review].replace(" "," | ")
+            text = df["Review"][index_review].replace(" ", " | ")
             st.write(text)
             st.markdown("---")
         else:
-            st.markdown("This is a view of the text split in tokens for the computer to better understand: ")
+            st.markdown(
+                "This is a view of the text split in tokens for the computer to better understand: ")
             doc = nlp(master_review)
-            text = master_review.replace(" "," | ")
+            text = master_review.replace(" ", " | ")
             st.write(text)
             st.markdown("---")
         snippet = f"""
@@ -266,7 +260,8 @@ def main():
         """
         code_header_placeholder = st.empty()
         snippet_placeholder = st.empty()
-        code_header_placeholder.header(f"**Code for the step: 03 - Tokenization**")
+        code_header_placeholder.header(
+            f"**Code for the step: 03 - Tokenization**")
         snippet_placeholder.code(snippet)
 
     elif nlp_steps == '04 - Lemmatization':
@@ -307,7 +302,6 @@ def main():
             st.dataframe(df_lemmatization)
             st.markdown("---")
 
-
         snippet = f"""
 
         >>> import pandas as pd
@@ -330,14 +324,15 @@ def main():
         """
         code_header_placeholder = st.empty()
         snippet_placeholder = st.empty()
-        code_header_placeholder.header(f"**Code for the step: 04 - Lemmatization**")
+        code_header_placeholder.header(
+            f"**Code for the step: 04 - Lemmatization**")
         snippet_placeholder.code(snippet)
-
 
     elif nlp_steps == '05 - Name Entity Recognition':
         if master_review == "Enter Text":
             HTML_WRAPPER = """<div style="overflow-x: auto; border: 1px solid #e6e9ef; border-radius: 0.25rem; padding: 1rem">{}</div>"""
-            st.markdown("This part assign a tag to each name and entity in a review: ")
+            st.markdown(
+                "This part assign a tag to each name and entity in a review: ")
             #html = displacy.render(doc, style='ent', jupyter=True)
             #html = html.replace("\n\n", "\n")
             #st.write(HTML_WRAPPER.format(html), unsafe_allow_html=True)
@@ -348,7 +343,8 @@ def main():
             st.markdown("---")
         else:
             HTML_WRAPPER = """<div style="overflow-x: auto; border: 1px solid #e6e9ef; border-radius: 0.25rem; padding: 1rem">{}</div>"""
-            st.markdown("This part assign a tag to each name and entity in a review: ")
+            st.markdown(
+                "This part assign a tag to each name and entity in a review: ")
             #html = displacy.render(doc, style='ent', jupyter=True)
             #html = html.replace("\n\n", "\n")
             #st.write(HTML_WRAPPER.format(html), unsafe_allow_html=True)
@@ -376,21 +372,24 @@ def main():
         """
         code_header_placeholder = st.empty()
         snippet_placeholder = st.empty()
-        code_header_placeholder.header(f"**Code for the step: 05 - Name Entity Recognition**")
+        code_header_placeholder.header(
+            f"**Code for the step: 05 - Name Entity Recognition**")
         snippet_placeholder.code(snippet)
 
     # check dupication rate
     elif nlp_steps == '06 - Part of Speech':
         if master_review == "Enter Text":
-            st.markdown(" Duplication rate is defined as the ratio of  number of duplicates to total records in dataset.")
+            st.markdown(
+                " Duplication rate is defined as the ratio of  number of duplicates to total records in dataset.")
             doc = nlp(df["Review"][index_review])
             models = ["en_core_web_sm", "/path/to/model"]
             default_text = df["Review"][index_review]
             visualizers = ["ner", "textcat"]
             spacy_streamlit.visualize(models, default_text, visualizers)
             st.markdown("---")
-        else :
-            st.markdown(" Duplication rate is defined as the ratio of  number of duplicates to total records in dataset.")
+        else:
+            st.markdown(
+                " Duplication rate is defined as the ratio of  number of duplicates to total records in dataset.")
             doc = nlp(master_review)
             models = ["en_core_web_sm", "/path/to/model"]
             default_text = master_review
@@ -415,7 +414,8 @@ def main():
         """
         code_header_placeholder = st.empty()
         snippet_placeholder = st.empty()
-        code_header_placeholder.header(f"**Code for the step: 06 - Part of Speech**")
+        code_header_placeholder.header(
+            f"**Code for the step: 06 - Part of Speech**")
         snippet_placeholder.code(snippet)
 
     # Sentiment Analysis
@@ -435,7 +435,8 @@ def main():
 
                 # function to visualize
                 def visualize_sentiments(data):
-                    sns.heatmap(pd.DataFrame(data).set_index("Sentence").T, center=0, annot=True, cmap="PiYG")
+                    sns.heatmap(pd.DataFrame(data).set_index(
+                        "Sentence").T, center=0, annot=True, cmap="PiYG")
 
                 # text
                 sentence = "To inspire and guide entrepreneurs is where I get my joy of contribution"
@@ -466,7 +467,8 @@ def main():
 
                 # function to visualize
                 def visualize_sentiments(data):
-                    sns.heatmap(pd.DataFrame(data).set_index("Sentence").T, center=0, annot=True, cmap="PiYG")
+                    sns.heatmap(pd.DataFrame(data).set_index(
+                        "Sentence").T, center=0, annot=True, cmap="PiYG")
 
                 # text
                 sentence = "To inspire and guide entrepreneurs is where I get my joy of contribution"
@@ -500,17 +502,18 @@ def main():
         """
         code_header_placeholder = st.empty()
         snippet_placeholder = st.empty()
-        code_header_placeholder.header(f"**Code for the step: 07 - Sentiment Analysis**")
+        code_header_placeholder.header(
+            f"**Code for the step: 07 - Sentiment Analysis**")
         snippet_placeholder.code(snippet)
-
 
     # Summarization
     elif nlp_steps == "08 - Text Summarization":
         if master_review == "Enter Text":
             st.subheader("Summarize Your Text")
 
-            message2 = st.text_area("Review",df["Review"][index_review])
-            summary_options = st.selectbox("Choose Summarizer", ['sumy', 'gensim'])
+            message2 = st.text_area("Review", df["Review"][index_review])
+            summary_options = st.selectbox(
+                "Choose Summarizer", ['sumy', 'gensim'])
             if st.button("Summarize"):
                 if summary_options == 'sumy':
                     st.text("Using Sumy Summarizer ..")
@@ -527,8 +530,9 @@ def main():
         else:
             st.subheader("Summarize Your Text")
 
-            message2 = st.text_area("Review",master_review)
-            summary_options = st.selectbox("Choose Summarizer", ['sumy', 'gensim'])
+            message2 = st.text_area("Review", master_review)
+            summary_options = st.selectbox(
+                "Choose Summarizer", ['sumy', 'gensim'])
             if st.button("Summarize"):
                 if summary_options == 'sumy':
                     st.text("Using Sumy Summarizer ..")
@@ -543,8 +547,6 @@ def main():
                 st.success(summary_result)
             st.markdown("---")
 
-
-
         snippet = f"""
 
         >>> import pandas as pd
@@ -557,9 +559,9 @@ def main():
         """
         code_header_placeholder = st.empty()
         snippet_placeholder = st.empty()
-        code_header_placeholder.header(f"**Code for the step: 08 - Text Summarization**")
+        code_header_placeholder.header(
+            f"**Code for the step: 08 - Text Summarization**")
         snippet_placeholder.code(snippet)
-
 
     # Summarization
     elif nlp_steps == "09 - Zoning":
@@ -589,27 +591,25 @@ def main():
         code_header_placeholder.header(f"**Code for the step: 09 - Zoning**")
         snippet_placeholder.code(snippet)
 
-
     elif nlp_steps == "10 - Mapping":
         st.header("Map reviews")
         HtmlFile = open("corpus_I_map_v2.html", 'r', encoding='utf-8')
         source_code = HtmlFile.read()
         print(source_code)
-        components.html(source_code, height = 600)
+        components.html(source_code, height=600)
         st.markdown("---")
 
 
-
-
-if __name__=='__main__':
+if __name__ == '__main__':
     main()
 
 st.markdown(" ")
 st.markdown("### ** 👨🏼‍💻 App Contributors: **")
-st.image(['images/mylene.png','images/gaetan.png'], width=100,caption=["Mylène","Gaëtan"])
+st.image(['images/mylene.png', 'images/gaetan.png'],
+         width=100, caption=["Mylène", "Gaëtan"])
 
-st.markdown(f"####  Link to Project Website [here]({'https://dramacritiques.com/fr/accueil/'}) 🚀 ")
-
+st.markdown(
+    f"####  Link to Project Website [here]({'https://dramacritiques.com/fr/accueil/'}) 🚀 ")
 
 
 def image(src_as_string, **style):
@@ -670,6 +670,7 @@ def layout(*args):
 
     st.markdown(str(foot), unsafe_allow_html=True)
 
+
 def footer2():
     myargs = [
         " Made by ",
@@ -681,6 +682,3 @@ def footer2():
 
 if __name__ == "__main__":
     footer2()
-
-
-
