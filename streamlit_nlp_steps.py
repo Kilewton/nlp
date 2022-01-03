@@ -93,13 +93,14 @@ def main():
     # images = Image.open('images/binary.png')
     # st.image(images, width=400)
 
-    # st.markdown("# Behind the Machine 🔍 🖥")
-    # st.subheader(
-    #     """
-    #     This is a place where you can get familiar with nlp models  directly from your browser 🧪
-    #     """
-    # )
-    # st.markdown("     ")
+    st.markdown("# A vous la main !")
+    st.subheader(
+        """
+        Choisissez la critique vous vous voulez et découvrez comment l’ordinateur devient un
+        outil formidable pour aborder des questions littéraires aussi vastes que classiques.
+        """
+    )
+    st.markdown("     ")
 
     st.markdown("---")
 
@@ -144,21 +145,21 @@ def main():
     )
 
     if nlp_steps == "00 - Show  Dataset":
-        if master_review == "Enter Text":
-            num = st.number_input('No. of Rows', 5, 10)
-            head = st.radio(
-                'View from top (head) or bottom (tail)', ('Head', 'Tail'))
+        # if master_review == "Enter Text":
+        #     num = st.number_input('No. of Rows', 5, 10)
+        #     head = st.radio(
+        #         'View from top (head) or bottom (tail)', ('Head', 'Tail'))
 
-            if head == 'Head':
-                st.dataframe(df.head(num))
-                #
+        #     if head == 'Head':
+        #         st.dataframe(df.head(num))
+        #         #
 
-            else:
-                st.dataframe(df.tail(num))
-            st.markdown("---")
-        else:
-            st.write(f"#### Your copied review: '{master_review}'")
-            st.markdown("---")
+        #     else:
+        #         st.dataframe(df.tail(num))
+        #     st.markdown("---")
+        # else:
+        st.write(f"#### Your copied review: '{master_review}'")
+        st.markdown("---")
 
         snippet = f"""
 
@@ -616,8 +617,8 @@ st.markdown("### ** 👨🏼‍💻 App Contributors: **")
 st.image(['images/mylene.png', 'images/gaetan.png'],
          width=100, caption=["Mylène", "Gaëtan"])
 
-st.markdown(
-    f"####  Link to Project Website [here]({'https://dramacritiques.com/fr/accueil/'}) 🚀 ")
+# st.markdown(
+#     f"####  Link to Project Website [here]({'https://dramacritiques.com/fr/accueil/'}) ")
 
 
 def image(src_as_string, **style):
