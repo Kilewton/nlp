@@ -103,7 +103,7 @@ def main():
 
     st.markdown("---")
 
-    st.sidebar.title("Configurations")
+    st.sidebar.title("Tableau de bord")
     st.sidebar.markdown("---")
     st.sidebar.header("Select Dataset")
     selected_indices = []
@@ -130,10 +130,10 @@ def main():
         if filename is not None:
             df = pd.read_csv(filename)
     st.sidebar.markdown("---")
-    st.sidebar.header("Select Process Step")
-    nlp_steps = st.sidebar.selectbox('', ['00 - Show  Dataset', '01 - Basic Information', '02 - Tokenization', '03 - Lemmatization',
+    st.sidebar.header("Sélectionnez la catégorie")
+    nlp_steps = st.sidebar.selectbox('', ['Corpus', '01 - Basic Information', '02 - Tokenization', '03 - Lemmatization',
                                      '04 - Name Entity Recognition', '05 - Part of Speech', "06 - Sentiment Analysis", "07 - Text Summarization", "08 - Zoning", "09 - Mapping"])
-    index_review = st.sidebar.number_input("Pick an Index of Review", 0, 100)
+    # index_review = st.sidebar.number_input("Pick an Index of Review", 0, 100)
     st.sidebar.markdown("---")
     st.sidebar.markdown(
         """
@@ -143,7 +143,7 @@ def main():
         unsafe_allow_html=True,
     )
 
-    if nlp_steps == "00 - Show  Dataset":
+    if nlp_steps == "Corpus":
         if master_review == "Enter Text":
             # num = st.number_input('No. of Rows', 5, 10)
             # head = st.radio(
@@ -178,7 +178,7 @@ def main():
         # code_header_placeholder = st.empty()
         # snippet_placeholder = st.empty()
         # code_header_placeholder.header(
-        #     f"**Code for the step: 00 - Show  Dataset**")
+        #     f"**Code for the step: Corpus**")
         # snippet_placeholder.code(snippet)
 
     elif nlp_steps == '01 - Show  Review':
