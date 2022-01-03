@@ -666,9 +666,6 @@ def layout(*args):
     foot = div(
         style=style_div
     )(
-        hr(
-            style=style_hr
-        ),
         body
     )
 
