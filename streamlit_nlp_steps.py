@@ -133,7 +133,7 @@ def main():
     st.sidebar.header("Sélectionnez la catégorie")
     nlp_steps = st.sidebar.selectbox('', ['Corpus', '01 - Basic Information', '02 - Tokenization', '03 - Lemmatization',
                                      '04 - Name Entity Recognition', '05 - Part of Speech', "06 - Sentiment Analysis", "07 - Text Summarization", "08 - Zoning", "09 - Mapping"])
-    # index_review = st.sidebar.number_input("Pick an Index of Review", 0, 100)
+    index_review = st.sidebar.number_input("Pick an Index of Review", 0, 100)
     st.sidebar.markdown("---")
     st.sidebar.markdown(
         """
