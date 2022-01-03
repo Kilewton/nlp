@@ -657,7 +657,6 @@ def layout(*args):
 
     style_hr = styles(
         display="block",
-        margin=px(8, 8, "auto", "auto"),
         border_style="inset",
         border_width=px(2)
     )
@@ -666,6 +665,9 @@ def layout(*args):
     foot = div(
         style=style_div
     )(
+        hr(
+            style=style_hr
+        ),
         body
     )
 
