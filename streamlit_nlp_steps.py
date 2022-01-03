@@ -157,17 +157,17 @@ def main():
                 st.dataframe(df.tail(num))
             st.markdown("---")
         else:
-        st.write(f"#### Your copied review: '{master_review}'")
-        st.markdown("---")
+            st.write(f"#### Your copied review: '{master_review}'")
+            st.markdown("---")
 
-        if master_review == "Enter Text":
-            st.markdown("The review you selected is the following one: ")
-            st.write('"' + df["Review"][index_review] + '"')
-            st.markdown("---")
-        else:
-            st.markdown("The review you selected is the following one: ")
-            st.write('"' + master_review + '"')
-            st.markdown("---")
+            if master_review == "Enter Text":
+                st.markdown("The review you selected is the following one: ")
+                st.write('"' + df["Review"][index_review] + '"')
+                st.markdown("---")
+            else:
+                st.markdown("The review you selected is the following one: ")
+                st.write('"' + master_review + '"')
+                st.markdown("---")
 
         # snippet = f"""
 
