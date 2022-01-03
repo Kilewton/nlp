@@ -657,7 +657,7 @@ def layout(*args):
 
     style_hr = styles(
         display="block",
-        margin=px(1, 1),
+        margin=px(1, 1, "auto", "auto"),
         border_style="inset",
         border_width=px(2)
     )
