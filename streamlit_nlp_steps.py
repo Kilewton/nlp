@@ -145,29 +145,25 @@ def main():
 
     if nlp_steps == "00 - Show  Dataset":
         if master_review == "Enter Text":
-            num = st.number_input('No. of Rows', 5, 10)
-            head = st.radio(
-                'View from top (head) or bottom (tail)', ('Head', 'Tail'))
+            # num = st.number_input('No. of Rows', 5, 10)
+            # head = st.radio(
+            #     'View from top (head) or bottom (tail)', ('Head', 'Tail'))
 
-            if head == 'Head':
-                st.dataframe(df.head(num))
-                #
-
-            else:
-                st.dataframe(df.tail(num))
+            st.dataframe(df.head())
+            #
             st.markdown("---")
         else:
             st.write(f"#### Your copied review: '{master_review}'")
             st.markdown("---")
 
-            if master_review == "Enter Text":
-                st.markdown("The review you selected is the following one: ")
-                st.write('"' + df["Review"][index_review] + '"')
-                st.markdown("---")
-            else:
-                st.markdown("The review you selected is the following one: ")
-                st.write('"' + master_review + '"')
-                st.markdown("---")
+        if master_review == "Enter Text":
+            st.markdown("The review you selected is the following one: ")
+            st.write('"' + df["Review"][index_review] + '"')
+            st.markdown("---")
+        else:
+            st.markdown("The review you selected is the following one: ")
+            st.write('"' + master_review + '"')
+            st.markdown("---")
 
         # snippet = f"""
 
