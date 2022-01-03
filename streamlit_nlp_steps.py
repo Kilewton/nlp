@@ -132,8 +132,8 @@ def main():
             df = pd.read_csv(filename)
     st.sidebar.markdown("---")
     st.sidebar.header("Select Process Step")
-    nlp_steps = st.sidebar.selectbox('', ['00 - Show  Dataset', '01 - Show  Review', '02 - Basic Information', '03 - Tokenization', '04 - Lemmatization',
-                                     '05 - Name Entity Recognition', '06 - Part of Speech', "07 - Sentiment Analysis", "08 - Text Summarization", "09 - Zoning", "10 - Mapping"])
+    nlp_steps = st.sidebar.selectbox('', ['00 - Show  Dataset', '01 - Basic Information', '02 - Tokenization', '03 - Lemmatization',
+                                     '04 - Name Entity Recognition', '05 - Part of Speech', "06 - Sentiment Analysis", "07 - Text Summarization", "08 - Zoning", "09 - Mapping"])
     index_review = st.sidebar.number_input("Pick an Index of Review", 0, 100)
     st.sidebar.markdown("---")
     st.sidebar.markdown(
@@ -161,21 +161,30 @@ def main():
         st.write(f"#### Your copied review: '{master_review}'")
         st.markdown("---")
 
-        snippet = f"""
+        if master_review == "Enter Text":
+            st.markdown("The review you selected is the following one: ")
+            st.write('"' + df["Review"][index_review] + '"')
+            st.markdown("---")
+        else:
+            st.markdown("The review you selected is the following one: ")
+            st.write('"' + master_review + '"')
+            st.markdown("---")
 
-        >>> import pandas as pd
-        >>> import numpy as  as np
+        # snippet = f"""
 
-        >>> df.head(5)
-        #Or
-        >>> df.tail(5)
+        # >>> import pandas as pd
+        # >>> import numpy as  as np
 
-        """
-        code_header_placeholder = st.empty()
-        snippet_placeholder = st.empty()
-        code_header_placeholder.header(
-            f"**Code for the step: 00 - Show  Dataset**")
-        snippet_placeholder.code(snippet)
+        # >>> df.head(5)
+        # #Or
+        # >>> df.tail(5)
+
+        # """
+        # code_header_placeholder = st.empty()
+        # snippet_placeholder = st.empty()
+        # code_header_placeholder.header(
+        #     f"**Code for the step: 00 - Show  Dataset**")
+        # snippet_placeholder.code(snippet)
 
     elif nlp_steps == '01 - Show  Review':
         if master_review == "Enter Text":
