@@ -96,8 +96,7 @@ def main():
     st.markdown("# A vous la main !")
     st.subheader(
         """
-        Choisissez la critique vous vous voulez et découvrez comment l’ordinateur devient un
-        outil formidable pour aborder des questions littéraires aussi vastes que classiques.
+        Choisissez la critique vous vous voulez et découvrez comment l’ordinateur devient un outil formidable pour aborder des questions littéraires aussi vastes que classiques.
         """
     )
     st.markdown("     ")
