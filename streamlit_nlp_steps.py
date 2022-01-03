@@ -210,7 +210,7 @@ def main():
             f"**Code for the step: 01 - Show  Review**")
         snippet_placeholder.code(snippet)
 
-    elif nlp_steps == '02 - Basic Information':
+    elif nlp_steps == '01 - Basic Information':
         if master_review == "Enter Text":
             st.markdown(
                 "Number of rows and columns helps us to determine how large the dataset is.")
@@ -249,7 +249,7 @@ def main():
             f"**Code for the step: 02 - Basic Information**")
         snippet_placeholder.code(snippet)
 
-    elif nlp_steps == '03 - Tokenization':
+    elif nlp_steps == '02 - Tokenization':
         if master_review == "Enter Text":
             st.markdown(
                 "This is a view of the text split in tokens for the computer to better understand: ")
@@ -281,7 +281,7 @@ def main():
             f"**Code for the step: 03 - Tokenization**")
         snippet_placeholder.code(snippet)
 
-    elif nlp_steps == '04 - Lemmatization':
+    elif nlp_steps == '03 - Lemmatization':
         if master_review == "Enter Text":
             st.markdown(
                 "Missing values are known as null or NaN values. Missing data tends to **introduce bias that leads to misleading results.**")
@@ -345,7 +345,7 @@ def main():
             f"**Code for the step: 04 - Lemmatization**")
         snippet_placeholder.code(snippet)
 
-    elif nlp_steps == '05 - Name Entity Recognition':
+    elif nlp_steps == '04 - Name Entity Recognition':
         if master_review == "Enter Text":
             HTML_WRAPPER = """<div style="overflow-x: auto; border: 1px solid #e6e9ef; border-radius: 0.25rem; padding: 1rem">{}</div>"""
             st.markdown(
@@ -394,7 +394,7 @@ def main():
         snippet_placeholder.code(snippet)
 
     # check dupication rate
-    elif nlp_steps == '06 - Part of Speech':
+    elif nlp_steps == '05 - Part of Speech':
         if master_review == "Enter Text":
             st.markdown(
                 " Duplication rate is defined as the ratio of  number of duplicates to total records in dataset.")
@@ -436,7 +436,7 @@ def main():
         snippet_placeholder.code(snippet)
 
     # Sentiment Analysis
-    elif nlp_steps == "07 - Sentiment Analysis":
+    elif nlp_steps == "06 - Sentiment Analysis":
         if master_review == "Enter Text":
             st.subheader("Analyse Your Text")
 
@@ -524,7 +524,7 @@ def main():
         snippet_placeholder.code(snippet)
 
     # Summarization
-    elif nlp_steps == "08 - Text Summarization":
+    elif nlp_steps == "07 - Text Summarization":
         if master_review == "Enter Text":
             st.subheader("Summarize Your Text")
 
@@ -581,7 +581,7 @@ def main():
         snippet_placeholder.code(snippet)
 
     # Summarization
-    elif nlp_steps == "09 - Zoning":
+    elif nlp_steps == "08 - Zoning":
         if master_review == "Enter Text":
             st.subheader("Creation of the zoning")
             images = Image.open('images/zoning.png')
@@ -608,7 +608,7 @@ def main():
         code_header_placeholder.header(f"**Code for the step: 09 - Zoning**")
         snippet_placeholder.code(snippet)
 
-    elif nlp_steps == "10 - Mapping":
+    elif nlp_steps == "09 - Mapping":
         st.header("Map reviews")
         HtmlFile = open("corpus_I_map_v2.html", 'r', encoding='utf-8')
         source_code = HtmlFile.read()
